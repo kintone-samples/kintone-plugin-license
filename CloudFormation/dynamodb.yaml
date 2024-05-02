@@ -1,0 +1,29 @@
+# kintone plugin license sample program
+# Copyright (c) 2024 Cybozu
+# 
+# Licensed under the MIT License
+# https://opensource.org/license/mit/
+
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  projectName:
+    Type: String
+    Default: kintonePluginLicense
+Resources:
+  KintonePluginLicenseTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${projectName}Table"
+      AttributeDefinitions:
+        - AttributeName: domain
+          AttributeType: S
+        - AttributeName: pluginId
+          AttributeType: S
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: domain
+        KeyType: HASH
+      - AttributeName: pluginId
+        KeyType: RANGE

@@ -1,0 +1,31 @@
+{
+  "name": "lambda-function-for-kintone-plugin-license",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "lint": "eslint ./src",
+    "prebuild": "rimraf ./dist",
+    "build": "npm run tsc && npm run lint && node build.js",
+    "postbuild": "cd dist && zip -r lambda-function.zip index.js"
+  },
+  "author": "cybozu",
+  "license": "MIT",
+  "devDependencies": {
+    "@cybozu/eslint-config": "^23.0.0",
+    "@types/aws-lambda": "^8.10.137",
+    "@types/node": "^20.12.8",
+    "esbuild": "^0.20.2",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.1.0",
+    "@aws-sdk/client-dynamodb": "^3.567.0",
+    "@aws-sdk/util-dynamodb": "^3.567.0",
+    "dayjs": "^1.11.11"
+  }
+}

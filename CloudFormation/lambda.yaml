@@ -1,0 +1,53 @@
+# kintone plugin license sample program
+# Copyright (c) 2024 Cybozu
+# 
+# Licensed under the MIT License
+# https://opensource.org/license/mit/
+
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  projectName:
+    Type: String
+    Default: kintonePluginLicense
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      RoleName: !Sub "${projectName}Role"
+      Policies:
+        - PolicyName: !Sub "${projectName}Policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:GetItem
+                Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${projectName}Table
+  KintonePluginLicenseLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            return {
+              statusCode: 200,
+              body: JSON.stringify('Hello from Lambda!'),
+            }
+          }
+      Environment:
+        Variables:
+          LICENSE_TABLE_NAME: !Sub "${projectName}Table"
+      Role: !GetAtt LambdaExecutionRole.Arn
+      FunctionName: !Sub "${projectName}Func"
+      Runtime: nodejs20.x
+      Timeout: 5
