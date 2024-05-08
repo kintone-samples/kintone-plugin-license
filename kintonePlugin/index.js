@@ -25,6 +25,7 @@
   kintone.events.on(["app.record.index.show"], async (event) => {
     try {
       const license = await fetchLicense();
+      console.info("ライセンス情報", license);
 
       if (!isValid(license)) {
         console.info("プラグインのライセンスは無効です。");
