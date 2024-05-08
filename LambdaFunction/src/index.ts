@@ -87,6 +87,7 @@ export const handler = async (
         statusCode,
         body: JSON.stringify({
           message: "Invalid",
+          expirationDate: item.expirationDate,
         }),
       };
     }
@@ -96,6 +97,7 @@ export const handler = async (
       statusCode,
       body: JSON.stringify({
         message: "Valid",
+        expirationDate: item.expirationDate,
       }),
     };
   } catch (error) {
