@@ -1,4 +1,4 @@
 # kintone-plugin-license
 
 See below.  
-https://cybozu.dev/ja/kintone/tips/best-practices/plugin-license-management/
+https://cybozu.dev/ja/kintone/tips/development/plugins/development-plugin/plugin-license-management/
